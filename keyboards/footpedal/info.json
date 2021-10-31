@@ -1,0 +1,22 @@
+{
+    "keyboard_name": "footpedal",
+    "manufacturer": "Steven Casper",
+    "url": "",
+    "usb": {
+        "pid": "0x6969",
+        "vid": "0xFEED",
+        "device_version": "0.0.1"
+    },
+    "maintainer": "Steven Casper",
+    "width": 3,
+    "height": 1,
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                {"label": "k00", "x": 0, "y": 0},
+                {"label": "k01", "x": 1, "y": 0},
+                {"label": "k02", "x": 2, "y": 0}
+            ]
+        }
+    }
+}
