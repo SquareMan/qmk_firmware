@@ -1,5 +1,3 @@
-#include "ez.h"
-#include "quantum.h"
 #include QMK_KEYBOARD_H
 #include "eeprom.h"
 #include "keymap_us_international.h"
@@ -162,46 +160,41 @@ void rgb_matrix_indicators_user(void) {
     }
 }
 
+static uint16_t code_timer  = 0;
+static char     queued_char = 0;
+void            process_pair(keyrecord_t *record, char left, char right) {
+    if (record->event.pressed) {
+        code_timer  = timer_read();
+        queued_char = right;
+    } else if (code_timer != 0) {
+        // timer has not expired since it is not set to zero
+        send_char(left);
+        code_timer = 0;
+    }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    static uint16_t code_timer;
     switch (keycode) {
         case PAIR_PAREN:
-            if (record->event.pressed) {
-                code_timer = timer_read();
-            } else if (timer_elapsed(code_timer) > TAPPING_TERM) {
-                send_char(')');
-            } else {
-                send_char('(');
-            }
-            return true;
+            process_pair(record, '(', ')');
+            return false;
         case PAIR_CURL:
-            if (record->event.pressed) {
-                code_timer = timer_read();
-            } else if (timer_elapsed(code_timer) > TAPPING_TERM) {
-                send_char('}');
-            } else {
-                send_char('{');
-            }
-            return true;
+            process_pair(record, '{', '}');
+            return false;
         case PAIR_SQUARE:
-            if (record->event.pressed) {
-                code_timer = timer_read();
-            } else if (timer_elapsed(code_timer) > TAPPING_TERM) {
-                send_char(']');
-            } else {
-                send_char('[');
-            }
-            return true;
+            process_pair(record, '[', ']');
+            return false;
         case PAIR_ANGLE:
-            if (record->event.pressed) {
-                code_timer = timer_read();
-            } else if (timer_elapsed(code_timer) > TAPPING_TERM) {
-                send_char('>');
-            } else {
-                send_char('<');
-            }
-            return true;
+            process_pair(record, '<', '>');
+            return false;
     }
     return true;
+}
+
+void matrix_scan_user() {
+    if (code_timer != 0 && timer_elapsed(code_timer) > TAPPING_TERM) {
+        send_char(queued_char);
+        code_timer = 0;
+    }
 }
 
