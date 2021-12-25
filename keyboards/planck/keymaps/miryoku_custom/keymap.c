@@ -27,12 +27,14 @@ enum planck_keycodes {
 
 enum planck_layers {
     _BASE,
+    _GAME,
     _NAV,
     _MOUSE,
     _MEDIA,
     _NUM,
     _SYM,
     _FUN,
+    _TOTAL_LAYERS,
 };
 
 // clang-format off
@@ -42,6 +44,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LGUI_T(KC_A),   LALT_T(KC_R),   LCTL_T(KC_S),   LSFT_T(KC_T),   KC_G,           KC_TRANSPARENT, KC_TRANSPARENT, KC_M,           RSFT_T(KC_N),   LCTL_T(KC_E),   LALT_T(KC_I),   LGUI_T(KC_O),   
     KC_Z,           RALT_T(KC_X),   KC_C,           KC_D,           KC_V,           KC_TRANSPARENT, KC_TRANSPARENT, KC_K,           KC_H,           KC_COMMA,       RALT_T(KC_DOT), KC_SLASH,       
     KC_TRANSPARENT, KC_TRANSPARENT, LT(_MEDIA,KC_ESCAPE),LT(_NAV,KC_SPACE), LT(_MOUSE,KC_TAB),   KC_TRANSPARENT, KC_NO,          LT(_SYM,KC_ENTER), LT(_NUM,KC_BSPACE),LT(_FUN,KC_DELETE),KC_TRANSPARENT, KC_TRANSPARENT
+  ),
+
+  [_GAME] = LAYOUT_planck_grid(
+    KC_Q,           KC_W,           KC_F,           KC_P,           KC_B,           DF(_BASE), KC_TRANSPARENT, KC_J,           KC_L,           KC_U,           KC_Y,           KC_QUOTE,       
+    KC_A,           KC_R,           KC_S,           KC_T,           KC_G,           KC_TRANSPARENT, KC_TRANSPARENT, KC_M,           KC_N,           KC_E,           KC_I,           KC_O,   
+    KC_Z,           KC_X,           KC_C,           KC_D,           KC_V,           KC_TRANSPARENT, KC_TRANSPARENT, KC_K,           KC_H,           KC_COMMA,       KC_DOT,         KC_SLASH,       
+    MO(_NUM), KC_TRANSPARENT, KC_ESCAPE,      KC_SPACE,       KC_TAB,         KC_TRANSPARENT, KC_NO,          LT(_SYM,KC_ENTER), LT(_NUM,KC_BSPACE),LT(_FUN,KC_DELETE),KC_TRANSPARENT, KC_TRANSPARENT
   ),
 
   [_NAV] = LAYOUT_planck_grid(
@@ -60,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MEDIA] = LAYOUT_planck_grid(
     RESET,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_TRANSPARENT, KC_TRANSPARENT, RGB_TOG,        RGB_MOD,        RGB_HUI,        RGB_SAI,        RGB_VAI,        
-    KC_LGUI,        KC_LALT,        KC_LCTRL,       KC_LSHIFT,      KC_NO,          KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,          KC_MEDIA_PREV_TRACK,KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_MEDIA_NEXT_TRACK,
+    KC_LGUI,        KC_LALT,        KC_LCTRL,       KC_LSHIFT,      DF(_GAME),      KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,          KC_MEDIA_PREV_TRACK,KC_AUDIO_VOL_DOWN,KC_AUDIO_VOL_UP,KC_MEDIA_NEXT_TRACK,
     WEBUSB_PAIR,    KC_RALT,        KC_NO,          KC_NO,          KC_NO,          KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_NO,          KC_NO,          KC_TRANSPARENT, KC_NO,          KC_MEDIA_STOP,  KC_MEDIA_PLAY_PAUSE,KC_AUDIO_MUTE,  KC_TRANSPARENT, KC_TRANSPARENT
   ),
@@ -90,6 +99,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
     [_BASE] = { {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {0,0,0} },
+
+    [_GAME] = { {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {0,0,0} },
 
     [_NAV] = { {243,222,234}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {85,203,158}, {85,203,158}, {85,203,158}, {85,203,158}, {0,0,0}, {0,0,0}, {0,0,0}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {0,183,238}, {85,203,158}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,225,255}, {0,0,0}, {0,0,0}, {0,0,0}, {134,255,213}, {0,0,0}, {0,0,0}, {134,255,213}, {134,255,213}, {134,255,213}, {0,0,0}, {0,0,0} },
 
@@ -132,31 +143,16 @@ void rgb_matrix_indicators_user(void) {
     if (g_suspend_state || keyboard_config.disable_layer_led) {
         return;
     }
-    switch (biton32(layer_state)) {
-        case _BASE:
-            set_layer_color(_BASE);
-            break;
-        case _NAV:
-            set_layer_color(_NAV);
-            break;
-        case _MOUSE:
-            set_layer_color(_MOUSE);
-            break;
-        case _MEDIA:
-            set_layer_color(_MEDIA);
-            break;
-        case _NUM:
-            set_layer_color(_NUM);
-            break;
-        case _SYM:
-            set_layer_color(_SYM);
-            break;
-        case _FUN:
-            set_layer_color(_FUN);
-            break;
-        default:
-            if (rgb_matrix_get_flags() == LED_FLAG_NONE) rgb_matrix_set_color_all(0, 0, 0);
-            break;
+
+    uint8_t layer = biton32(layer_state);
+    if (layer < _TOTAL_LAYERS) {
+        if (layer == 0) {
+            set_layer_color(biton32(default_layer_state));
+        } else {
+            set_layer_color(layer);
+        }
+    } else if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
+        rgb_matrix_set_color_all(0, 0, 0);
     }
 }
 
