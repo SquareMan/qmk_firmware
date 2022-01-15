@@ -1,3 +1,5 @@
+#include "action_layer.h"
+#include "suspend.h"
 #include QMK_KEYBOARD_H
 #include "eeprom.h"
 #include "keymap_us_international.h"
@@ -239,3 +241,6 @@ void matrix_scan_user() {
     }
 }
 
+void suspend_wakeup_init_user() {
+    default_layer_set(_BASE);
+}
