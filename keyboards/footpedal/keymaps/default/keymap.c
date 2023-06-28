@@ -17,7 +17,8 @@
 
 // Defines names for use in layer keycodes and the keymap
 enum layer_names {
-    _BASE
+    _BASE,
+    _MIDI
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -25,4 +26,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT(
         KC_F13,    KC_F14,    KC_F15
     ),
+    [_MIDI] = LAYOUT(
+        MI_C, MI_D, MI_E
+    )
 };
+
+void keyboard_post_init_user() {
+    if (!readPin(B4)) {
+        reset_keyboard();
+    }
+    if(!readPin(B5)) {
+        layer_on(_MIDI);
+    }
+}
