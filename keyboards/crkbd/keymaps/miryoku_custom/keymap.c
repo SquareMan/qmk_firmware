@@ -29,18 +29,6 @@ enum {
     _TOTAL_LAYERS,
 };
 
-enum {
-    _PAIR_ANG,
-    _PAIR_SQR,
-    _PAIR_CRL,
-    _PAIR_PRN,
-};
-
-#define TD_ANG TD(_PAIR_ANG)
-#define TD_SQR TD(_PAIR_SQR)
-#define TD_CRL TD(_PAIR_CRL)
-#define TD_PRN TD(_PAIR_PRN)
-
 #define LT_ESC LT(_MEDIA, KC_ESC)
 #define LT_SPC LT(_NAV, KC_SPC)
 #define LT_TAB LT(_MOUSE, KC_TAB)
@@ -60,10 +48,30 @@ enum {
 #define MOD_I RALT_T(KC_I)
 #define MOD_O RGUI_T(KC_O)
 
+const custom_shift_key_t custom_shift_keys[] = {
+    // Base layer parens replace angle brackets
+    {KC_COMM, KC_LPRN},
+    {KC_DOT, KC_RPRN},
+
+    // Invert ' and "
+    {KC_DOUBLE_QUOTE, KC_QUOTE},
+
+    // Symbol Layer
+    {KC_LABK, KC_RABK}, // < >
+    {KC_LBRC, KC_RBRC}, // [ ]
+    {KC_LCBR, KC_RCBR}, // { }
+    {KC_LPRN, KC_RPRN}, // ( )
+    {KC_UNDS, KC_MINUS}, // _ -
+    {KC_BSLS, KC_GRAVE}, // \ ^
+    {KC_SLSH, KC_HASH}, // / #
+    {KC_EQUAL, KC_EQUAL}, // Doubled for => bigram
+    {KC_DLR, KC_QUES}, // # FIXME: KC_SLSH->KC_HASH prevents getting ? on the base layer. Can't use layer mask because I want ( ) to be avaiable on , .
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT_split_3x6_3_ex2(
   //,--------------------------------------------------------------,  ,--------------------------------------------------------------.
-      XXXXXXX,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B, XXXXXXX,    XXXXXXX,    KC_J,    KC_L,    KC_U,    KC_Y,KC_QUOTE, XXXXXXX,
+      XXXXXXX,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B, XXXXXXX,    XXXXXXX,    KC_J,    KC_L,    KC_U,    KC_Y, KC_DQUO, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
       XXXXXXX,   MOD_A,   MOD_R,   MOD_S,   MOD_T,    KC_G, XXXXXXX,    XXXXXXX,    KC_M,   MOD_N,   MOD_E,   MOD_I,   MOD_O, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------'  '--------+--------+--------+--------+--------+--------+--------|
@@ -135,13 +143,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SYM] = LAYOUT_split_3x6_3_ex2(
   //,--------------------------------------------------------------,  ,--------------------------------------------------------------.
-      XXXXXXX, KC_BSLS, KC_TILD, KC_PIPE,  TD_ANG,KC_GRAVE, XXXXXXX,    CW_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, KC_BSLS, KC_TILD,KC_EQUAL, KC_LABK, KC_CIRC, XXXXXXX,    CW_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_SCLN, KC_EXLM, KC_AMPR,  TD_SQR,KC_EQUAL, XXXXXXX,    XXXXXXX, XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
+      XXXXXXX, KC_SLSH, KC_EXLM, KC_AMPR, KC_LBRC, KC_ASTR, XXXXXXX,    XXXXXXX, XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------'  '--------+--------+--------+--------+--------+--------+--------|
-      XXXXXXX,  KC_DLR, KC_COLN,   KC_AT, KC_HASH, KC_CIRC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, KC_PLUS, KC_PIPE, KC_LCBR, KC_SCLN,  KC_DLR,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //'--------+--------+--------+--------+--------+--------+--------,  ,--------+--------+--------+--------+--------+--------+--------'
-                                           TD_CRL,  TD_PRN, KC_UNDS,    _______, XXXXXXX, XXXXXXX
+                                            KC_AT, KC_LPRN, KC_UNDS,    _______, XXXXXXX, XXXXXXX
                                       //'--------------------------'  '--------------------------'
   ),
 
@@ -156,13 +164,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                           XXXXXXX, KC_CAPS, XXXXXXX,    XXXXXXX, XXXXXXX, _______
                                       //'--------------------------'  '--------------------------'
   )
-};
-
-tap_dance_action_t tap_dance_actions[] = {
-    [_PAIR_ANG] = ACTION_TAP_DANCE_DOUBLE(KC_LABK, KC_RABK),
-    [_PAIR_SQR] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC),
-    [_PAIR_CRL] = ACTION_TAP_DANCE_DOUBLE(KC_LCBR, KC_RCBR),
-    [_PAIR_PRN] = ACTION_TAP_DANCE_DOUBLE(KC_LPRN, KC_RPRN),
 };
 
 
